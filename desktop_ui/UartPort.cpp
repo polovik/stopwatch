@@ -59,6 +59,7 @@ void UartPort::sendPacket(const QByteArray& packet)
 #ifdef Q_OS_WIN
 bool UartPort::openPort()
 {
+    m_portName.insert(0, "\\\\.\\");
     qDebug() << "Try open port" << m_portName;
     wchar_t portName[30];
     memset(portName, 0x00, sizeof(portName));
