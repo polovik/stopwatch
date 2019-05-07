@@ -22,6 +22,8 @@ public slots:
     void closeDevice();
     void requestStatus();
     void requestReset();
+    void sendThresholdFirst(int threshold);
+    void sendThresholdSecond(int threshold);
 
 signals:
     void SIG_DEVICE_OPENED();

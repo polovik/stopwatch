@@ -23,6 +23,8 @@ private slots:
     void reset();
     void updateSensorsState(int sensor1, int sensor2);
     void updateTotalTime(quint64 msec);
+    void sliderMovedFirst(int value);
+    void sliderMovedSecond(int value);
 
 private:
     Ui::MainWindow *ui;

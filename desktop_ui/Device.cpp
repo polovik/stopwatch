@@ -137,14 +137,28 @@ bool Device::parsePacket()
 void Device::requestStatus()
 {
     QByteArray packet;
-    packet[0] = 'C';
+    packet[0] = 0x0A; // Enter 0x0A or 0x0D
     m_uartPort->sendPacket(packet);
 }
 
 void Device::requestReset()
 {
     QByteArray packet;
-    packet[0] = 'R';
+    packet[0] = 0x08; // Backspace 0x08
+    m_uartPort->sendPacket(packet);
+}
+
+void Device::sendThresholdFirst(int threshold)
+{
+    QByteArray packet;
+    packet[0] = 32 + threshold; // Range [32, 32+50]
+    m_uartPort->sendPacket(packet);
+}
+
+void Device::sendThresholdSecond(int threshold)
+{
+    QByteArray packet;
+    packet[0] = 82 + threshold; // Range [82, 82+50]
     m_uartPort->sendPacket(packet);
 }
 
