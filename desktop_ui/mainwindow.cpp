@@ -1,8 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Device.h"
+#include "testprecision.h"
+
+#include <QAction>
 #include <QDebug>
 #include <QPixmap>
+#include <QKeySequence>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -22,6 +26,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_device, SIGNAL(sensorState(int,int)), this, SLOT(updateSensorsState(int,int)));
     connect(m_device, SIGNAL(totalTime(quint64)), this, SLOT(updateTotalTime(quint64)));
     m_device->openDevice();
+
+    QAction *actionTestPrecision = new QAction("Open test form");
+    actionTestPrecision->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_T));
+    ui->buttonTestPrecision->addAction(actionTestPrecision);
+    connect(ui->buttonTestPrecision, SIGNAL(clicked(bool)), this, SLOT(showPrecisionTestingForm()));
+    connect(ui->buttonTestPrecision, SIGNAL(triggered(QAction*)), this, SLOT(showPrecisionTestingForm()));
 
     m_pollingTimer.setInterval(100);
     m_pollingTimer.setSingleShot(false);
@@ -98,4 +108,10 @@ void MainWindow::sliderMovedSecond(int value)
     float threshold2 = value / 10.f;
     ui->labelSecond->setText(QString("2: %1").arg(threshold2, 0, 'f', 1, '0'));
     m_device->sendThresholdSecond(value);
+}
+
+void MainWindow::showPrecisionTestingForm()
+{
+    TestPrecision *test = new TestPrecision();
+    test->open();
 }

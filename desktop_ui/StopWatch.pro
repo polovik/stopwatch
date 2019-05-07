@@ -22,15 +22,18 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     Device.cpp \
-    UartPort.cpp
+    UartPort.cpp \
+    testprecision.cpp
 
 HEADERS += \
         mainwindow.h \
     Device.h \
-    UartPort.h
+    UartPort.h \
+    testprecision.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    testprecision.ui
 
 RESOURCES += \
     stopwatch.qrc

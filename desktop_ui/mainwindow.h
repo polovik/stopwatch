@@ -25,6 +25,7 @@ private slots:
     void updateTotalTime(quint64 msec);
     void sliderMovedFirst(int value);
     void sliderMovedSecond(int value);
+    void showPrecisionTestingForm();
 
 private:
     Ui::MainWindow *ui;
