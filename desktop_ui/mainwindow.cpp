@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_device, SIGNAL(totalTime(quint64)), this, SLOT(updateTotalTime(quint64)));
     m_device->openDevice();
 
-    QAction *actionTestPrecision = new QAction("Open test form");
+    QAction *actionTestPrecision = new QAction("Open test form", Q_NULLPTR);
     actionTestPrecision->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_T));
     ui->buttonTestPrecision->addAction(actionTestPrecision);
     connect(ui->buttonTestPrecision, SIGNAL(clicked(bool)), this, SLOT(showPrecisionTestingForm()));
