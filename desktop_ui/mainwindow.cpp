@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->buttonTestPrecision, SIGNAL(clicked(bool)), this, SLOT(showPrecisionTestingForm()));
     connect(ui->buttonTestPrecision, SIGNAL(triggered(QAction*)), this, SLOT(showPrecisionTestingForm()));
 
-    m_pollingTimer.setInterval(100);
+    m_pollingTimer.setInterval(1000);
     m_pollingTimer.setSingleShot(false);
     connect(&m_pollingTimer, SIGNAL(timeout()), m_device, SLOT(requestStatus()));
 

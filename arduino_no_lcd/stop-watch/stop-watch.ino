@@ -12,7 +12,7 @@ volatile bool startFromFirstSensor = true;
 void setup() {
   // start serial port at 9600 bps and wait for port to open:
   Serial.begin(115200);
-  Serial.setTimeout(50);
+  Serial.setTimeout(5);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
@@ -24,6 +24,12 @@ void loop() {
   firstSensor = analogRead(A0);
   // read second analog input:
   secondSensor = analogRead(A1);
+
+  // update elapsed time:
+  if (startTime > 0) {
+    elapsedTime = millis() - startTime;
+  }
+
   if ((startTime == 0) && (elapsedTime == 0)) {
     // wait for ready to start
     if ((prevFirstSensor > threshold1) && (prevSecondSensor > threshold2))  {
@@ -50,7 +56,7 @@ void loop() {
   }
   prevFirstSensor = firstSensor;
   prevSecondSensor = secondSensor;
-  
+
   while (Serial.available() > 0) {
     // get incoming byte:
     inByte = Serial.read();
@@ -59,10 +65,6 @@ void loop() {
     } else if ((inByte >= 82) && (inByte < (82 + 50))) {
       threshold2 = 1024 * (inByte - 82) / 50;
     } else if ((inByte == 10) || (inByte == 13)) { // Enter
-      // update elapsed time:
-      if (startTime > 0) {
-        elapsedTime = millis() - startTime;
-      }
       // send sensor values:
       Serial.print(firstSensor);
       Serial.print(",");
@@ -74,12 +76,11 @@ void loop() {
       elapsedTime = 0;
     }
   }
-  delay(10);
 }
 
 void establishContact() {
   while (Serial.available() <= 0) {
     Serial.println("0,0,0");   // send an initial string
-    delay(300);
+    delay(1000);
   }
 }
